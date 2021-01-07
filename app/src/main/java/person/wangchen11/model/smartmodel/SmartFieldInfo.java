@@ -32,6 +32,9 @@ public class SmartFieldInfo {
 		if(smartField==null) {
 			return null;
 		}
+		String definedName = smartField.name();
+		if(definedName!=null&&definedName.length()>0) return definedName;
+
 		StringBuilder nameBuilder = new StringBuilder();
 		for(char ch:mField.getName().toCharArray()) {
 			if(Character.isUpperCase(ch)) {

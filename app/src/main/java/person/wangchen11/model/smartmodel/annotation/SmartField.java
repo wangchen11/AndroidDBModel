@@ -16,6 +16,7 @@ public @interface SmartField {
 	public boolean autoIncrement() default false;
 	public boolean notNull() default false;
 	public boolean primaryKey() default false;
-	public String type() default "";//like "varchar(100)"
+	public boolean blob() default false;
+	public String type() default "";
 	public String defaultValue() default "";
 }

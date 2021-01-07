@@ -241,14 +241,22 @@ public class SmartManager {
 			fields = smartTableInfo.getFieldNames();
 		}
 		for(String fieldName:fields) {
-			String string = cursor.getString(cursor.getColumnIndex(fieldName));
-			Field field = smartTableInfo.getField(fieldName).getField();
-			Object data = string2Object(string,field.getType());
+			SmartFieldInfo smartFieldInfo = smartTableInfo.getField(fieldName);
+			Field field = smartFieldInfo.getField();
+			int columnIndex = cursor.getColumnIndex(fieldName);
+			Object data = null;
+			if(smartFieldInfo.getSmartField().blob()){
+				data = cursor.getBlob(columnIndex);
+			} else {
+				String string = cursor.getString(columnIndex);
+				data = string2Object(string,field.getType());
+			}
 			try {
 				field.set(object, data);
 			} catch (Exception e) {
-				throw new FieldTypeCaseException(clazz, fieldName); 
+				throw new FieldTypeCaseException(clazz, fieldName);
 			}
+
 		}
 		return object;
 	}
